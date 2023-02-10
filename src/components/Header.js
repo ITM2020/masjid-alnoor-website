@@ -21,7 +21,7 @@ export default function Header() {
     <nav className={`${scrollPos ? 'transition bg-white' : 'transition bg-transparent'} container mx-auto fixed h-11 flex items-center justify-center z-10`}>
       <div className="container flex flex-wrap items-center justify-between mx-auto px-3">
         <a href="" className="flex items-center">
-          <Image src="/logo.png" className="h-6 mr-3" alt="Mosque Al-Noor Logo" width="32" height="32" />
+          <Image src="/img/logo.png" className="h-6 mr-3" alt="Mosque Al-Noor Logo" width="32" height="32" />
           <span className={`${scrollPos ? 'text-green-900' : 'text-white'} self-center text-xl font-semibold whitespace-nowrap`}>Masjid Al-Noor</span>
         </a>
 
