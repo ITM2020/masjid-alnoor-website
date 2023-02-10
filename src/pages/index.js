@@ -2,7 +2,15 @@ import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link';
 
+import { useEffect } from 'react';
+
 export default function Home({ timings, date, meta }) {
+  useEffect(() => {
+    if (window.location.hash.includes('_token=')) {
+      window.location.replace('/admin/' + window.location.hash)
+    }
+  })
+
   return (
     <>
       <Head>
