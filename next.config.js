@@ -10,7 +10,17 @@ const nextConfig = {
       }
     )
     return cfg;
-  }
+  },
+  experimental: {
+    swcPlugins: [
+      [
+        'next-superjson-plugin',
+        {
+          excluded: [],
+        },
+      ],
+    ],
+  },
 }
 
 module.exports = nextConfig
