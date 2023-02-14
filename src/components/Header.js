@@ -24,11 +24,11 @@ export default function Header() {
   }, []);
 
   return (
-    <nav className={`${scrollPos || showNav ? 'bg-white' : 'bg-transparent'} container mx-auto fixed h-11 flex items-center justify-center z-10 p-1`}>
+    <nav className={`${scrollPos || showNav ? 'bg-white' : 'bg-transparent'} container mx-auto fixed h-16 flex items-center justify-center z-10 p-1`}>
       <div className="container flex flex-wrap items-center justify-between mx-auto px-3">
         <Link href="/" className="flex items-center">
-          <Image src="/img/logo.png" className="h-6 mr-3" alt="Mosque Al-Noor Logo" width="32" height="32" />
-          <span className={`${scrollPos || showNav ? 'text-green-900' : 'text-white'} self-center text-xl font-semibold whitespace-nowrap`}>Masjid Al-Noor</span>
+          <Image src="/img/logo.png" className="h-10 w-10 mr-3" alt="Mosque Al-Noor Logo" width="32" height="32" />
+          <span className={`${scrollPos || showNav ? 'text-green-900' : 'text-white'} self-center text-2xl font-title whitespace-nowrap`}>Masjid Al-Noor</span>
         </Link>
 
         <button type="button" className={`${scrollPos || showNav ? 'text-gray' : 'text-white'} inline-flex items-center p-2 ml-3 text-sm rounded-lg md:hidden`} onClick={toggleNav}>

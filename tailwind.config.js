@@ -10,9 +10,9 @@ module.exports = {
   ],
   theme: {
     fontFamily: {
-      'heading': ['Roboto', 'Helvetica', 'Arial', 'sans-serif'],
-      'body': ['Open Sans', 'Helvetica', 'Arial', 'sans-serif'],
-      'title': ['Amiri', 'Helvetica', 'Arial', 'sans-serif']
+      'heading': ['Barlow Condensed', 'Helvetica', 'Arial', 'sans-serif'],
+      'body': ['Montserrat', 'Helvetica', 'Arial', 'sans-serif'],
+      'title': ['Cinzel Decorative', 'cursive']
     },
     extend: {},    
   },
