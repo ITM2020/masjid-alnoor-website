@@ -48,7 +48,7 @@ export default function Home({ timings, posts }) {
 
             <h1 className="whitespace-nowrap text-5xl text-center font-title">Masjid Al-Noor</h1>
 
-            <h3 className="text-center">Serving Niagara's Muslim Community for 30 years</h3>    
+            <h3 className="text-center">Serving Niagara&apos;s Muslim Community for 30 years</h3>    
           </div>
 
           
