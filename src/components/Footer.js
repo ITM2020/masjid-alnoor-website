@@ -1,6 +1,6 @@
 export default function Footer() {
   return (
-    <footer className="p-4 bg-white shadow md:flex md:items-center md:justify-between md:p-6">
+    <footer className="font-body p-4 bg-white shadow md:flex md:items-center md:justify-between md:p-6">
       <span className="text-sm text-gray-500 sm:text-center">
         © 2023 <a href="" className="hover:underline">Islamic Society of St. Catharines</a>. All Rights Reserved.
       </span>

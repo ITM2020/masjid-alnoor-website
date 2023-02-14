@@ -1,6 +1,6 @@
 export default function About() {
   return (
-    <section className="border border-red-400 bg-green-200 mb-5 p-5">
+    <section className="flex flex-col items-center justify-center h-screen bg-red-400">
       <p className="text-md">
         Established in 1994, Masjid Al Noor (Islamic Society of St Catherines) is a non-profit religious organization serving the Niagara region community. Our mission is to promote and preserve the Islamic faith, culture and tradition in the province of Ontario.
       </p>

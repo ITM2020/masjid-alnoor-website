@@ -2,14 +2,27 @@ import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link';
 
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
-export default function Home({ timings, date, meta }) {
+import { promises as fs } from 'fs';
+import path from "path";
+import matter from "gray-matter";
+
+import { register } from 'swiper/element/bundle';
+
+import styles from '../styles/index.module.css';
+
+register();
+
+export default function Home({ timings, posts }) {
+  const swiperElRef = useRef(null);
+
+  // gotta fix this
   useEffect(() => {
     if (window.location.hash.includes('_token=')) {
       window.location.replace('/admin/' + window.location.hash)
     }
-  })
+  });  
 
   return (
     <>
@@ -20,36 +33,134 @@ export default function Home({ timings, date, meta }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      {/* ChatGPT says 300-500px is ideal height for hero depending on content (h-80 is 320px) */}
-      <section className="text-white h-96 relative">
+      <section className="text-white h-screen relative overflow-hidden">
         <Image src="/img/mosqueSkyUpscale.jpeg" width="2600" height="1656" alt="Mosque sunset" className="pointer-events-none absolute min-h-full min-w-full object-cover z-[-1]"/>
-        <div className="pt-28 px-5">
-          <div className="pb-5">
-            <h3 className="whitespace-nowrap text-xl font-heading pb-3">Welcome To</h3>
-            <h1 className="whitespace-nowrap text-5xl font-title">Masjid Al-Noor</h1>            
+        <div className="pt-28 px-5 translate-y-1/2 md:translate-y-3/4">
+
+          <div className={`${styles.content} mb-10`}>
+            <div className={styles.content__container}>
+              <ul className={`${styles.content__container__list} whitespace-nowrap text-xl font-heading pb-3`}>
+                <li className={`${styles.content__container__list__item}`}><h3>Welcome to</h3></li>
+                <li className={`${styles.content__container__list__item}`}><h3>مرحبا بك في</h3></li>
+                <li className={`${styles.content__container__list__item}`}><h3>میں خوش آمدید</h3></li>
+              </ul>
+            </div>
+
+            <h1 className="whitespace-nowrap text-5xl text-center font-title">Masjid Al-Noor</h1>
+
+            <h3 className="text-center">Serving Niagara's Muslim Community for 30 years</h3>    
           </div>
+
+          
           <div>
-            <button className="block bg-green-400 p-1 rounded-lg text-center mb-2">Join Our Community</button>
-            <button className="block bg-green-400 p-1 rounded-lg text-center">Donate Now</button>
+            <button className="block bg-transparent p-2 rounded-lg border-solid border-white border-2 text-center mb-2 w-3/6 mx-auto font-body">Join Our Community</button>
+            <button className="block bg-transparent p-2 rounded-lg border-solid border-white border-2 text-center w-3/6 mx-auto font-body">Donate Now</button>
           </div>
         </div>
       </section>
 
-      <div className="container h-5 bg-gradient-to-r from-green-800 to-green-500"></div>
+      <section className="lg:grid lg:grid-cols-2 lg:grid-rows-4 2xl:grid-cols-3 2xl:grid-rows-3">
+        <Link href="/services">
+          <div className="group h-[45vh] flex justify-center items-center relative block border border-gray-200 rounded-lg m-5 overflow-hidden">
+            <Image src="/img/gridBackgrounds/services.jpg" width="2600" height="1656" alt="Mosque sunset" className="group-hover:blur-sm pointer-events-none absolute min-h-full min-w-full object-cover rounded-lg z-[-1]"/>
+            <h3 className={`${styles.gridHeader} text-3xl font-body font-bold text-white text-center tracking-wide`}>
+              Services<br></br>خدمات
+            </h3> 
+          </div>
+        </Link>
 
-      <section className="py-12">
+        <Link href="/announcements">
+          <div className="group h-[45vh] flex justify-center items-center relative block border border-gray-200 rounded-lg m-5 overflow-hidden drop-shadow-lg hover:drop-shadow-2xl">
+            <Image src="/img/gridBackgrounds/announcements.jpg" width="2600" height="1656" alt="Mosque sunset" className="group-hover:blur-sm pointer-events-none absolute min-h-full min-w-full object-cover z-[-1] rounded-lg"/>
+            <h3 className={`${styles.gridHeader} text-3xl font-body font-bold text-white text-center tracking-wide`}>
+              Announcements<br></br>الإعلانات
+            </h3> 
+          </div>
+        </Link>
+        
+        <Link href="/events">
+          <div className="group h-[45vh] flex justify-center items-center relative block border border-gray-200 rounded-lg m-5 overflow-hidden drop-shadow-lg hover:drop-shadow-2xl">
+            <Image src="/img/gridBackgrounds/events.jpg" width="2600" height="1656" alt="Mosque sunset" className="group-hover:blur-sm pointer-events-none absolute min-h-full min-w-full object-cover z-[-1] rounded-lg"/>
+            <h3 className={`${styles.gridHeader} text-3xl font-body font-bold text-white text-center tracking-wide`}>
+              Events<br></br>الأحداث
+            </h3>  
+          </div>
+        </Link>
+        
+        <Link href="/resources/adhan">
+          <div className="group h-[45vh] flex justify-center items-center relative block border border-gray-200 rounded-lg m-5 overflow-hidden drop-shadow-lg hover:drop-shadow-2xl">
+            <Image src="/img/gridBackgrounds/adhan.jpg" width="2600" height="1656" alt="Mosque sunset" className="group-hover:blur-sm pointer-events-none absolute min-h-full min-w-full object-cover z-[-1] rounded-lg"/>
+            <h3 className={`${styles.gridHeader} text-3xl font-body font-bold text-white text-center tracking-wide`}>
+              Adhan<br></br>أذان
+            </h3> 
+          </div>
+        </Link>
+        
+        <Link href="/resources/quran">
+          <div className="group h-[45vh] flex justify-center items-center relative block border border-gray-200 rounded-lg m-5 overflow-hidden drop-shadow-lg hover:drop-shadow-2xl">
+            <Image src="/img/gridBackgrounds/quran.jpg" width="2600" height="1656" alt="Mosque sunset" className="group-hover:blur-sm pointer-events-none absolute min-h-full min-w-full object-cover z-[-1] rounded-lg"/>
+            <h3 className={`${styles.gridHeader} text-3xl font-body font-bold text-white text-center tracking-wide`}>
+              Quran<br></br>القرآن
+            </h3> 
+          </div>
+        </Link>
+        
+        <Link href="/resources/recordings">
+          <div className="group h-[45vh] flex justify-center items-center relative block border border-gray-200 rounded-lg m-5 overflow-hidden drop-shadow-lg hover:drop-shadow-2xl">
+            <Image src="/img/gridBackgrounds/services.jpg" width="2600" height="1656" alt="Mosque sunset" className="group-hover:blur-sm pointer-events-none absolute min-h-full min-w-full object-cover rounded-lg z-[-1] "/>
+            <h3 className={`${styles.gridHeader} text-3xl font-body font-bold text-white text-center tracking-wide`}>
+              Recordings<br></br>التسجيلات
+            </h3> 
+          </div>
+        </Link>
+        
+        <Link href="/donate">
+          <div className="group h-[45vh] flex justify-center items-center relative block border border-gray-200 rounded-lg m-5 overflow-hidden drop-shadow-lg hover:drop-shadow-2xl">
+            <Image src="/img/gridBackgrounds/donate.jpg" width="2600" height="1656" alt="Mosque sunset" className="group-hover:blur-sm pointer-events-none absolute min-h-full min-w-full object-cover z-[-1] rounded-lg"/>
+            <h3 className={`${styles.gridHeader} text-3xl font-body font-bold text-white text-center tracking-wide`}>
+              Donate<br></br>يتبرع
+            </h3> 
+          </div>
+        </Link>
+        
+        <Link href="/volunteer">
+          <div className="group h-[45vh] flex justify-center items-center relative block border border-gray-200 rounded-lg m-5 overflow-hidden drop-shadow-lg hover:drop-shadow-2xl">
+            <Image src="/img/gridBackgrounds/volunteer.jpg" width="2600" height="1656" alt="Mosque sunset" className="group-hover:blur-sm pointer-events-none absolute min-h-full min-w-full object-cover z-[-1] rounded-lg"/>
+            <h3 className={`${styles.gridHeader} text-3xl font-body font-bold text-white text-center tracking-wide`}>
+              Volunteer<br></br>متطوع
+            </h3> 
+          </div>
+        </Link>
+        
+        <Link href="/contact">
+          <div className="group h-[45vh] flex justify-center items-center relative block border border-gray-200 rounded-lg m-5 overflow-hidden drop-shadow-lg hover:drop-shadow-2xl">
+            <Image src="/img/gridBackgrounds/contactus.jpg" width="2600" height="1656" alt="Mosque sunset" className="group-hover:blur-sm pointer-events-none absolute min-h-full min-w-full object-cover z-[-1] rounded-lg"/>
+            <h3 className={`${styles.gridHeader} text-3xl font-body font-bold text-white text-center tracking-wide`}>
+              Contact Us<br></br>اتصل بنا
+            </h3> 
+          </div>
+        </Link>
+      </section>
+
+      <section className="group h-[45vh] flex justify-center items-center relative block border border-gray-200 rounded-lg m-5 overflow-hidden">
+        <Image src="/img/gridBackgrounds/history.jpg" width="2600" height="1656" alt="Mosque sunset" className="group-hover:blur-sm pointer-events-none absolute min-h-full min-w-full object-cover z-[-1] rounded-lg"/>
+        <h3 className={`${styles.gridHeader} text-3xl font-body font-bold text-white text-center tracking-wide`}>
+          About Us<br></br>معلومات عنا
+        </h3> 
+      </section>
+
+      {/* <section className="py-12">
         <div className="w-10/12 mx-auto">
           <h3 className="text-3xl font-bold font-heading text-center">Our History</h3>
           <p className="text-xl font-body font-light mt-5">
             Established in 1994, Masjid Al Noor (Islamic Society of St. Catharines) is a non-profit religious organization serving the Niagara region community. Our mission is to promote and preserve the Islamic faith, culture and tradition in the province of Ontario.
           </p>
+          <button className="block bg-transparent p-2 rounded-full border-solid border-green-400 border-2 text-center mb-2 mx-auto">Learn More</button>
           <div className="mt-3 bg-green-400 w-4/12 text-center p-2">
             <Link href="/about"><button className="">Learn More</button></Link>
           </div>
         </div>       
       </section>
-
-      <div className="container h-5 bg-gradient-to-r from-green-800 to-green-500"></div>
 
       <section className="py-12">
         <div className="w-10/12 mx-auto">
@@ -63,21 +174,7 @@ export default function Home({ timings, date, meta }) {
         </div>       
       </section>
 
-      <div className="container h-5 bg-gradient-to-r from-green-800 to-green-500"></div>
-
-      <section className="py-12">
-        <div className="w-10/12 mx-auto">
-          <h3 className="text-3xl font-bold font-heading text-center">Announcements</h3>
-          <p className="text-xl font-body font-light mt-5">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-          </p>
-          <div className="mt-3 bg-green-400 w-4/12 text-center p-2">
-            <Link href="/about"><button className="">Learn More</button></Link>
-          </div>
-        </div>       
-      </section>
-
-      <div className="container h-5 bg-gradient-to-r from-green-800 to-green-500"></div>
+      
 
       <section className="py-12">
         <div className="w-10/12 mx-auto">
@@ -91,8 +188,6 @@ export default function Home({ timings, date, meta }) {
         </div>       
       </section>
 
-      <div className="container h-5 bg-gradient-to-r from-green-800 to-green-500"></div>
-
       <section className="border border-red-400 p-5">
         <h3>Contact Us</h3>
         <p className="text-md font-body">
@@ -101,26 +196,7 @@ export default function Home({ timings, date, meta }) {
         <div>
           <button className="">Learn More</button>
         </div>
-      </section>
-
-      <div className="container h-5 bg-gradient-to-r from-green-800 to-green-500"></div>
-
-      <section className="border border-red-400 p-5 flex">
-        <div className="left">
-          Al Quran
-        </div>
-        <div className="right">
-          <div>Fajr: {timings.Fajr}</div>
-          <div>Sunrise: {timings.Sunrise}</div>
-          <div>Dhuhr: {timings.Dhuhr}</div>
-          <div>Asr: {timings.Asr}</div>
-          <div>Sunset: {timings.Sunset}</div>
-          <div>Maghrib: {timings.Maghrib}</div>
-          <div>Isha: {timings.Isha}</div>
-        </div>          
-      </section>
-
-      <div className="container h-5 bg-gradient-to-r from-green-800 to-green-500"></div>
+      </section> */}
     </>
   )
 }
@@ -128,12 +204,29 @@ export default function Home({ timings, date, meta }) {
 export async function getStaticProps(context) {
   const res = await fetch("https://api.aladhan.com/v1/timingsByAddress?address=Al%20Noor%20Masjid,%20St.%20Catharines,%20ON");
   const data = await res.json();
-  console.log(data.data)
+
+  const postsDirectory = path.join(process.cwd(), 'public/_posts/announcements');
+  const fileNames = await fs.readdir(postsDirectory);
+
+  const posts = fileNames.map(async (filename) => {
+    const filePath = path.join(postsDirectory, filename)
+    const fileContents = await fs.readFile(filePath, 'utf8')
+    
+    const { data, content } = matter(fileContents);
+    
+    return {
+      filename: filename,
+      metaData: data,
+      content: content,
+    }
+  })
+
   return {
     props: {
       timings: data.data.timings,
       date: data.data.date,
       meta: data.data.meta,
+      posts: await Promise.all(posts)
     } // will be passed to the page component as props
   }
 }
